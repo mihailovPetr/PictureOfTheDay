@@ -4,8 +4,7 @@
     android:id="@+id/bottom_sheet_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f6f6fa"
-    android:visibility="visible"
+    android:background="?attr/bottomSheetBackground"
     app:behavior_hideable="true"
     app:behavior_peekHeight="@dimen/bottom_sheet_behavior_peekheight"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -21,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/bottom_sheet_description_header"
+        android:id="@+id/bottom_sheet_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/bottom_sheet_header_margin_top"
@@ -43,5 +42,5 @@
         android:text="@string/bottom_sheet_description_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_description_header" />
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_header" />
 </androidx.constraintlayout.widget.ConstraintLayout>

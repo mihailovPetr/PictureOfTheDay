@@ -3,14 +3,13 @@ package com.example.pictureoftheday.view
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.api.load
+import com.example.pictureoftheday.MainActivity
 import com.example.pictureoftheday.R
 import com.example.pictureoftheday.databinding.FragmentPictureOfTheDayBinding
 import com.example.pictureoftheday.model.PictureOfTheDayData
@@ -25,8 +24,6 @@ class PictureOfTheDayFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-    private lateinit var bottomSheetHeader: TextView
-    private lateinit var bottomSheetDescription: TextView
 
     private var isHD = false
     private var checkedDate = Date()
@@ -42,7 +39,8 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initBottomSheet(view.findViewById(R.id.bottom_sheet_container))
+        setBottomBar(view)
+        initBottomSheet(binding.bottomLayout.bottomSheetContainer)
         binding.inputLayout.setEndIconOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW).apply {
                 data =
@@ -76,7 +74,7 @@ class PictureOfTheDayFragment : Fragment() {
     private fun renderData(data: PictureOfTheDayData) {
         when (data) {
             is PictureOfTheDayData.Success -> {
-                binding.loadingLayout.visibility = View.GONE
+                binding.loadingBar.visibility = View.GONE
                 val serverResponseData = data.serverResponseData
                 val url = if (isHD && !serverResponseData.hdurl.isNullOrEmpty()) serverResponseData.hdurl
                 else serverResponseData.url
@@ -88,15 +86,15 @@ class PictureOfTheDayFragment : Fragment() {
                         error(R.drawable.ic_load_error_vector)
                         placeholder(R.drawable.ic_no_photo_vector)
                     }
-                    bottomSheetHeader.text = serverResponseData.title
-                    bottomSheetDescription.text = serverResponseData.explanation
+                    binding.bottomLayout.bottomSheetHeader.text = serverResponseData.title
+                    binding.bottomLayout.bottomSheetDescription.text = serverResponseData.explanation
                 }
             }
             is PictureOfTheDayData.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.loadingBar.visibility = View.VISIBLE
             }
             is PictureOfTheDayData.Error -> {
-                binding.loadingLayout.visibility = View.GONE
+                binding.loadingBar.visibility = View.GONE
                 data.error.message?.let { showError(it) }
             }
         }
@@ -111,10 +109,6 @@ class PictureOfTheDayFragment : Fragment() {
     private fun initBottomSheet(bottomSheet: ConstraintLayout) {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        view?.apply {
-            bottomSheetHeader = findViewById(R.id.bottom_sheet_description_header)
-            bottomSheetDescription = findViewById(R.id.bottom_sheet_description)
-        }
     }
 
     override fun onCreateView(
@@ -123,6 +117,28 @@ class PictureOfTheDayFragment : Fragment() {
     ): View? {
         _binding = FragmentPictureOfTheDayBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_bottom_bar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.app_bar_settings -> {
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.replace(R.id.container, SettingsFragment.newInstance())?.addToBackStack(null)
+                    ?.commit()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun setBottomBar(view: View) {
+        val context = activity as MainActivity
+        context.setSupportActionBar(binding.bottomAppBar)
+        setHasOptionsMenu(true)
     }
 
     override fun onDestroyView() {

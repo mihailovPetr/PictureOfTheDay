@@ -12,5 +12,38 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="bottomSheetBackground">@color/white_bottom_sheet_background</item>
+    </style>
+
+    <style name="RedTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/red_primary</item>
+        <item name="colorPrimaryVariant">@color/red_primary_dark</item>
+        <item name="colorOnPrimary">@color/red_primary_light</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/red_secondary</item>
+        <item name="colorSecondaryVariant">@color/red_secondary_dark</item>
+        <item name="colorOnSecondary">@color/red_secondary_light</item>
+        <item name="colorSurface">@color/red_surface</item>
+        <item name="android:colorBackground">@color/red_background</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="bottomSheetBackground">@color/red_bottom_sheet_background</item>
+    </style>
+
+    <style name="BlueTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/blue_primary</item>
+        <item name="colorPrimaryVariant">@color/blue_primary_dark</item>
+        <item name="colorOnPrimary">@color/blue_primary_light</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/blue_secondary</item>
+        <item name="colorSecondaryVariant">@color/blue_secondary_dark</item>
+        <item name="colorOnSecondary">@color/blue_secondary_light</item>
+        <item name="colorSurface">@color/blue_surface</item>
+        <item name="android:colorBackground">@color/blue_background</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="bottomSheetBackground">@color/blue_bottom_sheet_background</item>
     </style>
 </resources>
