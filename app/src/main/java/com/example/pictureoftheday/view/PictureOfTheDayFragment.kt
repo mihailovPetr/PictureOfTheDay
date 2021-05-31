@@ -4,15 +4,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.api.load
-import com.example.pictureoftheday.MainActivity
 import com.example.pictureoftheday.R
 import com.example.pictureoftheday.databinding.FragmentPictureOfTheDayBinding
-import com.example.pictureoftheday.model.PictureOfTheDayData
+import com.example.pictureoftheday.model.NetData
+import com.example.pictureoftheday.model.PODServerResponseData
 import com.example.pictureoftheday.viewmodel.PictureOfTheDayViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
@@ -39,15 +38,12 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setBottomBar(view)
         initBottomSheet(binding.bottomLayout.bottomSheetContainer)
-        binding.inputLayout.setEndIconOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW).apply {
-                data =
-                    Uri.parse("https://en.wikipedia.org/wiki/${binding.inputEditText.text.toString()}")
-            })
-        }
+        initWiki()
+        initChips()
+    }
 
+    private fun initChips() {
         binding.chipHd.setOnCheckedChangeListener { buttonView, isChecked ->
             isHD = isChecked
             viewModel.getImage(checkedDate)
@@ -61,7 +57,7 @@ class PictureOfTheDayFragment : Fragment() {
                 R.id.chipYesterday -> {
                     calendar.add(Calendar.DATE, -1);
                 }
-                R.id.chipDayBeforeYesterday -> {
+                R.id.chipTwoDaysBefore -> {
                     calendar.add(Calendar.DATE, -2);
                 }
                 else -> return@setOnCheckedChangeListener
@@ -71,13 +67,23 @@ class PictureOfTheDayFragment : Fragment() {
         }
     }
 
-    private fun renderData(data: PictureOfTheDayData) {
+    private fun initWiki() {
+        binding.inputLayout.setEndIconOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW).apply {
+                data =
+                    Uri.parse("https://en.wikipedia.org/wiki/${binding.inputEditText.text.toString()}")
+            })
+        }
+    }
+
+    private fun renderData(data: NetData) {
         when (data) {
-            is PictureOfTheDayData.Success -> {
+            is NetData.Success<*> -> {
                 binding.loadingBar.visibility = View.GONE
-                val serverResponseData = data.serverResponseData
-                val url = if (isHD && !serverResponseData.hdurl.isNullOrEmpty()) serverResponseData.hdurl
-                else serverResponseData.url
+                val serverResponseData = data.data as PODServerResponseData
+                val url =
+                    if (isHD && !serverResponseData.hdurl.isNullOrEmpty()) serverResponseData.hdurl
+                    else serverResponseData.url
                 if (url.isNullOrEmpty()) {
                     showError("Ссылка пустая")
                 } else {
@@ -87,13 +93,14 @@ class PictureOfTheDayFragment : Fragment() {
                         placeholder(R.drawable.ic_no_photo_vector)
                     }
                     binding.bottomLayout.bottomSheetHeader.text = serverResponseData.title
-                    binding.bottomLayout.bottomSheetDescription.text = serverResponseData.explanation
+                    binding.bottomLayout.bottomSheetDescription.text =
+                        serverResponseData.explanation
                 }
             }
-            is PictureOfTheDayData.Loading -> {
+            is NetData.Loading -> {
                 binding.loadingBar.visibility = View.VISIBLE
             }
-            is PictureOfTheDayData.Error -> {
+            is NetData.Error -> {
                 binding.loadingBar.visibility = View.GONE
                 data.error.message?.let { showError(it) }
             }
@@ -117,28 +124,6 @@ class PictureOfTheDayFragment : Fragment() {
     ): View? {
         _binding = FragmentPictureOfTheDayBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_bottom_bar, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.app_bar_settings -> {
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.container, SettingsFragment.newInstance())?.addToBackStack(null)
-                    ?.commit()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun setBottomBar(view: View) {
-        val context = activity as MainActivity
-        context.setSupportActionBar(binding.bottomAppBar)
-        setHasOptionsMenu(true)
     }
 
     override fun onDestroyView() {

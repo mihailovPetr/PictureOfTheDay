@@ -79,7 +79,7 @@
                         android:text="Вчера" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chipDayBeforeYesterday"
+                        android:id="@+id/chipTwoDaysBefore"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -120,13 +120,5 @@
     <include
         android:id="@+id/bottom_layout"
         layout="@layout/bottom_sheet_layout" />
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottom_app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:backgroundTint="?attr/colorPrimary"
-        app:menu="@menu/menu_bottom_bar"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
