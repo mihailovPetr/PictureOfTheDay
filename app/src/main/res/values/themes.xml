@@ -10,12 +10,17 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
         <item name="bottomSheetBackground">@color/white_bottom_sheet_background</item>
+        <item name="headerImage">@drawable/space_image</item>
     </style>
 
-    <style name="RedTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.PictureOfTheDay.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.PictureOfTheDay.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="RedTheme" parent="Theme.PictureOfTheDay">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/red_primary</item>
         <item name="colorPrimaryVariant">@color/red_primary_dark</item>
@@ -27,11 +32,11 @@
         <item name="colorSurface">@color/red_surface</item>
         <item name="android:colorBackground">@color/red_background</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="bottomSheetBackground">@color/red_bottom_sheet_background</item>
+        <item name="headerImage">@drawable/mars_image</item>
     </style>
 
-    <style name="BlueTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="BlueTheme" parent="Theme.PictureOfTheDay">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_primary</item>
         <item name="colorPrimaryVariant">@color/blue_primary_dark</item>
@@ -43,7 +48,6 @@
         <item name="colorSurface">@color/blue_surface</item>
         <item name="android:colorBackground">@color/blue_background</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="bottomSheetBackground">@color/blue_bottom_sheet_background</item>
     </style>
 </resources>

@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.earth.EarthFragment"
-    android:padding="30dp">
+    tools:context=".view.earth.EarthFragment">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager_earth"

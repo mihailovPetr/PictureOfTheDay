@@ -11,6 +11,11 @@
         android:title="Earth" />
 
     <item
+        android:id="@+id/bottom_view_favorite"
+        android:icon="@drawable/ic_favourite_menu"
+        android:title="Favorite" />
+
+    <item
         android:id="@+id/bottom_view_settings"
         android:icon="@drawable/ic_settings_menu"
         android:title="Settings" />

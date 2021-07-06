@@ -4,41 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
     tools:context=".view.PictureOfTheDayFragment">
 
-    <androidx.core.widget.NestedScrollView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="@dimen/app_bar_height"
+        android:theme="@style/Theme.PictureOfTheDay.AppBarOverlay">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/main"
+        <com.example.pictureoftheday.view.customViews.CollapsibleToolbar
+            android:id="@+id/motionLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
+            android:fitsSystemWindows="false"
+            android:minHeight="@dimen/collapse_toolbar_min_height"
+            app:layoutDescription="@xml/fragment_picture_of_the_day_header_scene"
+            app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/search_wiki"
-                app:counterEnabled="true"
-                app:counterMaxLength="20"
-                app:endIconCheckable="true"
-                app:endIconDrawable="@drawable/ic_wikipedia"
-                app:endIconMode="custom"
-                app:helperText="@string/wiki_helper_text"
+            <ImageView
+                android:id="@+id/background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/app_bar_height"
+                android:background="?attr/colorPrimary"
+                android:scaleType="fitXY"
+                android:src="?attr/headerImage"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/label"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="@string/title"
+                android:textAlignment="center"
+                android:textColor="?attr/colorOnPrimary"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+<!--                        <com.google.android.material.textfield.TextInputLayout-->
+<!--                            android:id="@+id/input_layout"-->
+<!--                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:hint="@string/search_wiki"-->
+<!--                            app:counterEnabled="true"-->
+<!--                            app:counterMaxLength="20"-->
+<!--                            app:endIconCheckable="true"-->
+<!--                            app:endIconDrawable="@drawable/ic_wikipedia"-->
+<!--                            app:endIconMode="custom"-->
+<!--                            app:helperText="@string/wiki_helper_text"-->
+<!--                            app:layout_constraintEnd_toStartOf="@id/wiki_button"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                            <com.google.android.material.textfield.TextInputEditText-->
+<!--                                android:id="@+id/input_edit_text"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:inputType="text" />-->
+<!--                        </com.google.android.material.textfield.TextInputLayout>-->
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_hd"
@@ -46,15 +74,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hd_chip_text"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_layout" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <HorizontalScrollView
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scrollView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                app:layout_constraintStart_toEndOf="@+id/chip_hd"
-                app:layout_constraintTop_toBottomOf="@+id/input_layout">
+                app:layout_constraintBottom_toBottomOf="@id/chip_hd"
+                app:layout_constraintStart_toEndOf="@+id/chip_hd">
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipGroup"
@@ -86,39 +115,117 @@
                         android:text="Позавчера" />
 
                 </com.google.android.material.chip.ChipGroup>
-            </HorizontalScrollView>
+            </androidx.core.widget.NestedScrollView>
+
+<!--            <androidx.constraintlayout.utils.widget.ImageFilterView-->
+<!--                android:id="@+id/wiki_button"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="10dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:src="@drawable/ic_wikipedia"-->
+<!--                app:altSrc="@drawable/ic_baseline_east_24"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/chip_hd"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:overlay="false" />-->
+
+        </com.example.pictureoftheday.view.customViews.CollapsibleToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="13dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="13dp">
 
             <FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chip_hd">
+                app:layout_constraintStart_toStartOf="parent">
 
-                <com.example.pictureoftheday.view.SquareImageView
+                <WebView
+                    android:id="@+id/web_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+
+                <com.example.pictureoftheday.view.customViews.ZoomableImageView
                     android:id="@+id/image_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="400dp"
                     android:layout_gravity="center"
                     android:contentDescription="@string/photo_of_the_day_stub"
                     app:srcCompat="@drawable/ic_no_photo_vector" />
 
-                <ProgressBar
-                    android:id="@+id/loadingBar"
-                    style="?android:attr/progressBarStyleLarge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
             </FrameLayout>
+
+            <ProgressBar
+                android:id="@+id/loadingBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/frameLayout"
+                app:layout_constraintBottom_toBottomOf="@id/frameLayout"/>
+
+            <TextView
+                android:id="@+id/description_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bottom_sheet_header_margin_top"
+                android:text="@string/bottom_sheet_header_text"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/description_explanation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/bottom_sheet_description_padding_start"
+                android:paddingEnd="@dimen/bottom_sheet_description_padding_end"
+                android:text="@string/bottom_sheet_description_text"
+                app:layout_constraintTop_toBottomOf="@+id/description_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Space
+                android:id="@+id/space"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description_explanation" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-    <include
-        android:id="@+id/bottom_layout"
-        layout="@layout/bottom_sheet_layout" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@drawable/ic_favourite_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

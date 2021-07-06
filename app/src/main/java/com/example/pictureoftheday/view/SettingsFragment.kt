@@ -27,7 +27,7 @@ class SettingsFragment : Fragment() {
         for (theme in themes) {
             themesNames.add(theme.displayingName)
         }
-        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, themesNames)
+        val adapter = ArrayAdapter(requireContext(), R.layout.settings_theme_dropdown_item, themesNames)
         binding.changeThemeAutoCompleteTextView.setText(Settings.theme.displayingName)
         binding.changeThemeAutoCompleteTextView.setAdapter(adapter)
         

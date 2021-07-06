@@ -39,6 +39,10 @@ class MainActivity : AppCompatActivity() {
                         openPage(EarthFragment.newInstance())
                         true
                     }
+                    R.id.bottom_view_favorite -> {
+                        openPage(EarthFragment.newInstance())
+                        true
+                    }
                     R.id.bottom_view_settings -> {
                         openPage(SettingsFragment.newInstance())
                         true
